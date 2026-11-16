@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
 
+/// Model data untuk satu tombol menu: nama, ikon, dan warna latar.
 class ItemHomepage {
   final String name;
   final IconData icon;
+  final Color color;
 
-  ItemHomepage(this.name, this.icon);
+  ItemHomepage(this.name, this.icon, this.color);
 }
 
+/// Halaman utama aplikasi (statis, jadi cukup StatelessWidget).
 class MyHomePage extends StatelessWidget {
   MyHomePage({super.key});
 
@@ -14,10 +17,11 @@ class MyHomePage extends StatelessWidget {
   final String nama = "Immanuel Marvin Pandjaitan";
   final String kelas = "PBP D";
 
+  // Setiap tombol punya warna sendiri, tanpa percabangan if-else.
   final List<ItemHomepage> items = [
-    ItemHomepage("Lihat Proyek", Icons.folder),
-    ItemHomepage("Tambah Proyek", Icons.add_circle),
-    ItemHomepage("Logout", Icons.logout),
+    ItemHomepage("Lihat Proyek", Icons.folder, Colors.blue),
+    ItemHomepage("Tambah Proyek", Icons.add_circle, Colors.green),
+    ItemHomepage("Logout", Icons.logout, Colors.red),
   ];
 
   @override
@@ -38,6 +42,7 @@ class MyHomePage extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
+            // Tiga kartu identitas pemilik portofolio.
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
@@ -60,6 +65,7 @@ class MyHomePage extends StatelessWidget {
                       ),
                     ),
                   ),
+                  // Kisi 3 kolom berisi kartu tombol aksi.
                   GridView.count(
                     primary: true,
                     padding: const EdgeInsets.all(20),
@@ -81,6 +87,7 @@ class MyHomePage extends StatelessWidget {
   }
 }
 
+/// Kartu informasi yang menampilkan judul dan isi.
 class InfoCard extends StatelessWidget {
   final String title;
   final String content;
@@ -109,6 +116,7 @@ class InfoCard extends StatelessWidget {
   }
 }
 
+/// Kartu tombol aksi; warna latar diambil dari item.color.
 class ItemCard extends StatelessWidget {
   final ItemHomepage item;
 
@@ -117,7 +125,7 @@ class ItemCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Material(
-      color: Theme.of(context).colorScheme.secondary,
+      color: item.color,
       borderRadius: BorderRadius.circular(12),
       child: InkWell(
         onTap: () {
