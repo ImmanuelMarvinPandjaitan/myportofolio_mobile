@@ -22,6 +22,7 @@ class MyHomePage extends StatelessWidget {
   final List<ItemHomepage> items = [
     ItemHomepage("Lihat Proyek", Icons.folder, Colors.blue),
     ItemHomepage("Tambah Proyek", Icons.add_circle, Colors.green),
+    ItemHomepage("Tambah Pendidikan", Icons.school, Colors.purple),
     ItemHomepage("Logout", Icons.logout, Colors.red),
   ];
 
@@ -40,50 +41,50 @@ class MyHomePage extends StatelessWidget {
         iconTheme: const IconThemeData(color: Colors.white),
       ),
       drawer: const LeftDrawer(),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            // Tiga kartu identitas pemilik portofolio.
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                InfoCard(title: 'NPM', content: npm),
-                InfoCard(title: 'Name', content: nama),
-                InfoCard(title: 'Class', content: kelas),
-              ],
-            ),
-            const SizedBox(height: 16.0),
-            Center(
-              child: Column(
+      // SingleChildScrollView agar halaman tidak overflow di layar sempit.
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              // Tiga kartu identitas pemilik portofolio.
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                  const Padding(
-                    padding: EdgeInsets.only(top: 16.0),
-                    child: Text(
-                      'Selamat datang di MyPortfolio Mobile!',
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 18.0,
-                      ),
-                    ),
-                  ),
-                  // Kisi 3 kolom berisi kartu tombol aksi.
-                  GridView.count(
-                    primary: true,
-                    padding: const EdgeInsets.all(20),
-                    crossAxisSpacing: 10,
-                    mainAxisSpacing: 10,
-                    crossAxisCount: 3,
-                    shrinkWrap: true,
-                    children: items.map((ItemHomepage item) {
-                      return ItemCard(item);
-                    }).toList(),
-                  ),
+                  InfoCard(title: 'NPM', content: npm),
+                  InfoCard(title: 'Name', content: nama),
+                  InfoCard(title: 'Class', content: kelas),
                 ],
               ),
-            ),
-          ],
+              const SizedBox(height: 16.0),
+              const Padding(
+                padding: EdgeInsets.only(top: 16.0),
+                child: Text(
+                  'Selamat datang di MyPortfolio Mobile!',
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 18.0,
+                  ),
+                ),
+              ),
+              // Kisi 2 kolom berisi kartu tombol aksi. Scroll ditangani
+              // oleh SingleChildScrollView di atasnya.
+              GridView.count(
+                primary: false,
+                physics: const NeverScrollableScrollPhysics(),
+                padding: const EdgeInsets.all(20),
+                crossAxisSpacing: 10,
+                mainAxisSpacing: 10,
+                crossAxisCount: 2,
+                childAspectRatio: 1.5,
+                shrinkWrap: true,
+                children: items.map((ItemHomepage item) {
+                  return ItemCard(item);
+                }).toList(),
+              ),
+            ],
+          ),
         ),
       ),
     );
